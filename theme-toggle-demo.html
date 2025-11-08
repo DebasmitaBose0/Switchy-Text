@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <title>Switchy Text: Light, Dark, Auto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <style>
+    :root {
+      --primary-gradient-light: linear-gradient(135deg, #ffecd2 0%, #fcb69f 40%, #a1c4fd 100%);
+      --primary-gradient-dark: linear-gradient(135deg, #232526 0%, #414345 40%, #0f2027 100%);
+      --accent-light: #ff7e5f;
+      --accent-dark: #43cea2;
+      --accent2-light: #a1c4fd;
+      --accent2-dark: #185a9d;
+      --bg-color-light: rgba(255,255,255,0.7);
+      --text-color-light: #222;
+      --input-bg-light: #fff;
+      --input-text-light: #222;
+      --button-bg-light: #ff7e5f;
+      --button-text-light: #fff;
+      --button-hover-light: #feb47b;
+      --footer-bg-light: #fcb69f;
+      --footer-text-light: #222;
+
+      --bg-color-dark: rgba(24,26,32,0.7);
+      --text-color-dark: #fff;
+      --input-bg-dark: #23262f;
+      --input-text-dark: #fff;
+      --button-bg-dark: #43cea2;
+      --button-text-dark: #181a20;
+      --button-hover-dark: #185a9d;
+      --footer-bg-dark: #434343;
+      --footer-text-dark: #fff;
+
+      --bg-color: var(--bg-color-light);
+      --text-color: var(--text-color-light);
+      --input-bg: var(--input-bg-light);
+      --input-text: var(--input-text-light);
+      --button-bg: var(--button-bg-light);
+      --button-text: var(--button-text-light);
+      --button-hover: var(--button-hover-light);
+      --footer-bg: var(--footer-bg-light);
+      --footer-text: var(--footer-text-light);
+      --primary-gradient: var(--primary-gradient-light);
+      --accent: var(--accent-light);
+      --accent2: var(--accent2-light);
+    }
+
+    [data-theme="dark"] {
+      --bg-color: var(--bg-color-dark);
+      --text-color: var(--text-color-dark);
+      --input-bg: var(--input-bg-dark);
+      --input-text: var(--input-text-dark);
+      --button-bg: var(--button-bg-dark);
+      --button-text: var(--button-text-dark);
+      --button-hover: var(--button-hover-dark);
+      --footer-bg: var(--footer-bg-dark);
+      --footer-text: var(--footer-text-dark);
+      --primary-gradient: var(--primary-gradient-dark);
+      --accent: var(--accent-dark);
+    }
+
+    [data-theme="light"] {
+      --bg-color: var(--bg-color-light);
+      --text-color: var(--text-color-light);
+      --input-bg: var(--input-bg-light);
+      --input-text: var(--input-text-light);
+      --button-bg: var(--button-bg-light);
+      --button-text: var(--button-text-light);
+      --button-hover: var(--button-hover-light);
+      --footer-bg: var(--footer-bg-light);
+      --footer-text: var(--footer-text-light);
+      --primary-gradient: var(--primary-gradient-light);
+      --accent: var(--accent-light);
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Montserrat', 'Segoe UI', 'Roboto', Arial, sans-serif;
+      transition: background 0.3s, color 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0 1rem;
+      background-image: var(--primary-gradient);
+      background-attachment: fixed;
+    }
+
+    .container {
+      max-width: 500px;
+      width: 100%;
+      margin-top: 3rem;
+      background: var(--bg-color);
+      border-radius: 2rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      padding: 2.5rem 2rem 2rem 2rem;
+      backdrop-filter: blur(12px) saturate(180%);
+      position: relative;
+      border: 1.5px solid var(--accent2);
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.3rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--accent2);
+      text-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 1.15rem;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-align: left;
+    }
+
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7em;
+      margin-bottom: 1.7rem;
+      padding: 0.8em 1.7em;
+      font-size: 1.08rem;
+      border: none;
+      border-radius: 2em;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      color: var(--button-text);
+      cursor: pointer;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      transition: background 0.3s, color 0.3s, transform 0.2s;
+      font-weight: 600;
+      outline: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .theme-toggle-btn:hover {
+      background: linear-gradient(90deg, var(--accent2), var(--accent));
+      transform: scale(1.04);
+    }
+    .theme-toggle-btn:active {
+      transform: scale(0.98);
+    }
+    .theme-toggle-btn svg {
+      width: 1.2em;
+      height: 1.2em;
+      vertical-align: middle;
+      fill: currentColor;
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 1em 1.2em;
+      border-radius: 1.2em;
+      border: 2px solid var(--accent2);
+      background: var(--input-bg);
+      color: var(--input-text);
+      font-size: 1.08rem;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+      outline: none;
+      box-sizing: border-box;
+      resize: vertical;
+      font-family: inherit;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+
+    input[type="text"]:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent2)33;
+    }
+
+    .textarea-row {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .copy-btn {
+      padding: 0.6em 1.2em;
+      border-radius: 2em;
+      border: none;
+      background: linear-gradient(90deg, var(--accent2), var(--accent));
+      color: #fff;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      font-weight: 600;
+      margin-left: 0.5em;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    .copy-btn:hover {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scale(1.04);
+    }
+
+    .char-count {
+      font-size: 0.98rem;
+      color: var(--accent2);
+      margin-top: 0.2em;
+      text-align: right;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .notification {
+      position: absolute;
+      top: 1.2em;
+      right: 1.2em;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      color: #fff;
+      padding: 0.6em 1.4em;
+      border-radius: 2em;
+      font-size: 1.05rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+      z-index: 10;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    }
+    .notification.show {
+      opacity: 1;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 1rem;
+        margin-top: 1rem;
+      }
+      h1 {
+        font-size: 1.3rem;
+      }
+    }
+
+    .explanation {
+      font-size: 1.02rem;
+      background: rgba(255,255,255,0.18);
+      border-radius: 1em;
+      padding: 1.2em;
+      margin-top: 1.5em;
+      color: var(--text-color);
+      transition: background 0.3s, color 0.3s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      font-weight: 500;
+    }
+
+    footer {
+      width: 100%;
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      text-align: center;
+      padding: 1em 0;
+      font-size: 1rem;
+      margin-top: 2em;
+      border-radius: 0.7em 0.7em 0 0;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.07);
+      letter-spacing: 0.02em;
+    }
+
+    .typewriter {
+      font-size: 1.08rem;
+      color: var(--accent);
+      margin: 0.7em 0 1.2em 0;
+      min-height: 1.5em;
+      font-family: inherit;
+      letter-spacing: 0.01em;
+      white-space: pre;
+      border-right: 2px solid var(--accent2);
+      overflow: hidden;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      background: none;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Switchy Text</h1>
+    <div class="typewriter" id="typewriter"></div>
+    <button class="theme-toggle-btn" id="themeToggleBtn">
+      <span id="themeIcon"></span>
+      <span id="themeLabel">Auto</span>
+    </button>
+    <div class="input-group">
+      <input type="text" placeholder="Type something here..." />
+      <div class="textarea-row">
+        <textarea id="mainTextarea" rows="3" placeholder="Or write in this textarea..."></textarea>
+        <button class="copy-btn" id="copyBtn" title="Copy text">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M6 2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6.414A2 2 0 0 0 15.414 5L13 2.586A2 2 0 0 0 11.586 2H6zm0 2h5.586L16 6.414V16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/></svg>
+          Copy
+        </button>
+      </div>
+      <div class="char-count" id="charCount">0 characters</div>
+      <div class="notification" id="notification">Copied!</div>
+    </div>
+    <!-- Explanation section removed as requested -->
+  </div>
+    <footer>
+  &copy; 2025 Switchy Text by Debasmita. All rights reserved.
+    </footer>
+  <script>
+    // Theme modes: 'auto', 'dark', 'light'
+    const themeOrder = ['auto', 'dark', 'light'];
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeLabel = document.getElementById('themeLabel');
+    const themeIcon = document.getElementById('themeIcon');
+    const root = document.documentElement;
+
+    // SVG icons for theme modes
+    const icons = {
+      auto: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 2a8 8 0 1 0 8 8h-8V2z"/></svg>',
+      dark: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 0 1 6.707 2.707a8 8 0 1 0 10.586 10.586z"/></svg>',
+      light: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 4a6 6 0 1 1 0 12A6 6 0 0 1 10 4zm0-2a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V3a1 1 0 0 1 1-1zm0 16a1 1 0 0 1-1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1-1 1zm8-8a1 1 0 0 1-1-1h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zm-16 0a1 1 0 0 1-1-1h1a1 1 0 0 1 0-2H3a1 1 0 0 1-1 1zm12.364-6.364a1 1 0 0 1 1.414 0l.707.707a1 1 0 0 1-1.414 1.414l-.707-.707a1 1 0 0 1 0-1.414zm-10.607 10.607a1 1 0 0 1 1.414 0l.707.707a1 1 0 0 1-1.414 1.414l-.707-.707a1 1 0 0 1 0-1.414zm12.364 10.607a1 1 0 0 1 0-1.414l.707-.707a1 1 0 0 1 1.414 1.414l-.707.707a1 1 0 0 1-1.414 0zm-10.607-10.607a1 1 0 0 1 0-1.414l.707-.707a1 1 0 0 1 1.414 1.414l-.707.707a1 1 0 0 1-1.414 0z"/></svg>'
+    };
+
+    // Get saved theme or default to 'auto'
+    function getSavedTheme() {
+      return localStorage.getItem('theme-mode') || 'auto';
+    }
+
+    // Detect system theme
+    function getSystemTheme() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    // Apply theme to <html> via data-theme attribute
+    function applyTheme(mode) {
+      if (mode === 'auto') {
+        root.removeAttribute('data-theme');
+      } else {
+        root.setAttribute('data-theme', mode);
+      }
+      themeLabel.textContent = mode.charAt(0).toUpperCase() + mode.slice(1);
+      themeIcon.innerHTML = icons[mode];
+    }
+
+    // Set theme and save to localStorage
+    function setTheme(mode) {
+      localStorage.setItem('theme-mode', mode);
+      applyTheme(mode);
+    }
+
+    // Handle system theme changes in Auto mode
+    function handleSystemThemeChange(e) {
+      if (getSavedTheme() === 'auto') {
+        applyTheme('auto');
+      }
+    }
+
+    // Cycle theme mode
+    function cycleTheme() {
+      const current = getSavedTheme();
+      const idx = themeOrder.indexOf(current);
+      const next = themeOrder[(idx + 1) % themeOrder.length];
+      setTheme(next);
+    }
+
+    // Initial setup
+    function initTheme() {
+      const saved = getSavedTheme();
+      applyTheme(saved);
+      // Listen for system theme changes
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', handleSystemThemeChange);
+    }
+
+    // Button click event
+    themeToggleBtn.addEventListener('click', cycleTheme);
+
+    // On page load
+    initTheme();
+
+    // --- New Features ---
+    const textarea = document.getElementById('mainTextarea');
+    const charCount = document.getElementById('charCount');
+    const copyBtn = document.getElementById('copyBtn');
+    const notification = document.getElementById('notification');
+
+    function updateCharCount() {
+      charCount.textContent = `${textarea.value.length} character${textarea.value.length === 1 ? '' : 's'}`;
+    }
+
+    textarea.addEventListener('input', updateCharCount);
+    updateCharCount();
+
+    copyBtn.addEventListener('click', function() {
+      textarea.select();
+      document.execCommand('copy');
+      showNotification('Copied!');
+    });
+
+    function showNotification(msg) {
+      notification.textContent = msg;
+      notification.classList.add('show');
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 1200);
+    }
+
+    // Typewriter animation for project purpose
+    const typewriterText = "A simple demo to showcase theme toggling.";
+    const typewriterElem = document.getElementById('typewriter');
+    let twIndex = 0;
+    let twVisible = true;
+    function typeWriter() {
+      if (twIndex <= typewriterText.length) {
+        typewriterElem.textContent = typewriterText.slice(0, twIndex);
+        twIndex++;
+        setTimeout(typeWriter, 38);
+      } else {
+        blinkCursor();
+      }
+    }
+    function blinkCursor() {
+      twVisible = !twVisible;
+      typewriterElem.style.borderRight = twVisible ? '2px solid var(--accent2)' : '2px solid transparent';
+      setTimeout(blinkCursor, 500);
+    }
+    typeWriter();
+  </script>
+</body>
+</html>
